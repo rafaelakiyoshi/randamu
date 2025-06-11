@@ -2,8 +2,6 @@ import { WheelWrapper } from "./components/WheelWrapper";
 import { atomWithStorage} from 'jotai/utils'
 import './App.css';
 import {  useAtomValue } from "jotai";
-import Card from "./components/Card/Card";
-import Title from "./components/Title/Title";
 
 export const contestsAtom = atomWithStorage('contests', {
   ['ONDE VAMOS COMER']: ['k2', 'Five Guys', 'Torinos', 'Parma Cafe', 'W&G', 'Kinton', 'Something else'],
@@ -23,17 +21,6 @@ export default function App() {
   return (
     <>
       <WheelWrapper contestKey={Object.keys(contests)[0]} />
-        {/* <Card style={{ marginBottom: '1rem', cursor: 'pointer'}}>
-          <Title style={{ fontSize: '2rem'}} >
-            {Object.keys(contests)[0]}
-          </Title>
-        </Card>
-
-        <Card style={{ marginBottom: '1rem', cursor: 'pointer'}}>
-          <Title style={{ fontSize: '2rem'}} >
-            {Object.keys(contests)[1]}
-          </Title>
-        </Card> */}
     </>
   );
 }

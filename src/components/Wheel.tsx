@@ -6,7 +6,7 @@ type WheelProps = {
   segmentAngle: number;
 };
 
-function stringToHslColor(str) {
+function stringToHslColor(str: string) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
