@@ -31,14 +31,24 @@ const HomePage: React.FC = () => {
 
   if (Object.keys(contests).length === 0) {
     return (
-      <Container>
-        <Title style={{ margin: "1em" }}>
-          You do not have existing contests.
+      <div
+        style={{
+          textAlign: "center",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <Title style={{ margin: "1em", textAlign: "center" }}>
+          No Contests.
         </Title>
         <Button onClick={onClick} disabled={false} loading={false}>
           New Contest
         </Button>
-      </Container>
+      </div>
     );
   }
 

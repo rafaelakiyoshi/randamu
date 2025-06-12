@@ -68,7 +68,7 @@ const CreateContestPage: React.FC = () => {
           </span>
           <Title>CONTEST</Title>
         </div>
-        <div style={{ height: "85vh", padding: "2rem", overflow: "auto" }}>
+        <div style={{ height: "83vh", padding: "2rem", overflow: "auto" }}>
           <input
             type="text"
             placeholder="Contest title"
@@ -126,7 +126,7 @@ const CreateContestPage: React.FC = () => {
             position: "absolute",
             right: "2rem",
             left: "2rem",
-            bottom: "1rem",
+            bottom: "2rem",
           }}
         >
           CREATE
