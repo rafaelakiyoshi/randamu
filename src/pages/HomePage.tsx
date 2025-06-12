@@ -1,5 +1,4 @@
 import { atomWithStorage } from "jotai/utils";
-import Container from "../components/Container/Container";
 import { useAtomValue } from "jotai";
 import Button from "../components/Button/Button";
 import Title from "../components/Title/Title";
