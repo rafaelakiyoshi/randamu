@@ -69,6 +69,7 @@ const HomePage: React.FC = () => {
                     cursor: "pointer",
                     textOverflow: "ellipsis",
                     overflow: "hidden",
+                    marginBottom: "1rem",
                   }}
                 >
                   <Title style={{ fontSize: "1.5rem" }}>{contestKey}</Title>
@@ -85,7 +86,7 @@ const HomePage: React.FC = () => {
             position: "absolute",
             right: "5rem",
             left: "5rem",
-            bottom: "1rem",
+            bottom: "3rem",
           }}
         >
           New Contest

@@ -26,7 +26,9 @@ const EditContestPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCreate = () => {
-    updateContest({ [contest.title]: contest.contestors });
+    updateContest((current) => {
+      return { ...current, [contest.title]: contest.contestors };
+    });
     navigate(`/contest/${encodeURIComponent(contest.title)}`);
   };
 
@@ -78,7 +80,7 @@ const EditContestPage: React.FC = () => {
           </span>
           <Title>CONTEST</Title>
         </div>
-        <div style={{ height: "83vh", padding: "2rem", overflow: "auto" }}>
+        <div style={{ height: "80vh", padding: "2rem", overflow: "auto" }}>
           <input
             type="text"
             placeholder="Contest title"
@@ -106,6 +108,7 @@ const EditContestPage: React.FC = () => {
                   placeholder="Contestor"
                   onChange={(e) => handleChangeContestor(e.target.value, index)}
                   value={contest.contestors[index]}
+                  autoFocus
                 />
                 <Button
                   onClick={() => handleRemoveContestor(index)}
@@ -136,7 +139,7 @@ const EditContestPage: React.FC = () => {
             position: "absolute",
             right: "2rem",
             left: "2rem",
-            bottom: "2rem",
+            bottom: "3rem",
           }}
         >
           SAVE
