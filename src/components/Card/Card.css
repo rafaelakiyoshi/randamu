@@ -1,12 +1,8 @@
 .card {
-  max-width: 32rem; /* Equivalent to max-w-md */
-  width: 100%;
+  max-width: 30rem; /* Equivalent to max-w-md */
   background-color: #2d3748; /* Equivalent to bg-gray-800 */
   border-radius: 0.75rem; /* Equivalent to rounded-xl */
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Equivalent to shadow-2xl */
-  padding: 1.5rem; /* Equivalent to p-6 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 2rem; /* Equivalent to space-y-8 */
+  padding: 2rem; /* Equivalent to p-6 */
+  margin: 0;
 }

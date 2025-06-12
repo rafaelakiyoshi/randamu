@@ -1,42 +1,56 @@
-import  { useState } from 'react';
-import { Wheel } from './Wheel';
-import Button from './Button';
-import Card from './Card/Card';
-import Title from './Title/Title';
-import { selectAtom } from 'jotai/utils';
-import { contestsAtom } from '../App';
-import React from 'react';
-import { useAtomValue } from 'jotai';
+import { useState } from "react";
+import { Wheel } from "./Wheel";
+import Button from "./Button/Button";
+import Title from "./Title/Title";
+import { selectAtom } from "jotai/utils";
+import React from "react";
+import { useAtomValue } from "jotai";
+import { contestsAtom } from "../pages/HomePage";
+import Container from "./Container/Container";
+import { useNavigate } from "react-router";
 
 type WheelWrapperProps = {
-  contestKey: string
-}
+  contestKey: string;
+};
 export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
-  const wheelAtom = React.useMemo(() => selectAtom(contestsAtom, (contests: Record<string, string[]>) => contests[contestKey]), [contestKey])
-  const segments = useAtomValue(wheelAtom);
+  const navigate = useNavigate();
+  const wheelAtom = React.useMemo(
+    () =>
+      selectAtom(
+        contestsAtom,
+        (contests: Record<string, string[]>) => contests[contestKey]
+      ),
+    [contestKey]
+  );
+  const segments = useAtomValue(wheelAtom) || [""];
 
   const segmentAngle = 360 / segments.length;
-  const [rotation, setRotation] = useState(-segmentAngle / 2);
+  const [rotation, setRotation] = useState(-segmentAngle / 2 || 0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [winner, setWinner] = useState<string>();
   const spinDurationSeconds = 3; // Spin duration
 
+  if (segments.length === 0) return null;
 
-  const calculateTargetRotation = (segmentIndex: number, currentTotalRotation: number): number => {
+  const calculateTargetRotation = (
+    segmentIndex: number,
+    currentTotalRotation: number
+  ): number => {
     const minFullSpins = 5;
     const additionalSpins = Math.floor(Math.random() * 8); // 0 to 7 additional spins
     const totalFullSpins = minFullSpins + additionalSpins;
     let exactTargetAngle = -(segmentIndex * segmentAngle + segmentAngle / 2);
-    exactTargetAngle = (exactTargetAngle % 360 + 360) % 360;
-    const currentVisualRotation = (currentTotalRotation % 360 + 360) % 360;
-    const degreesToMove = (exactTargetAngle - currentVisualRotation + 360) % 360;
-    const finalRotation = currentTotalRotation + (totalFullSpins * 360) + degreesToMove;
+    exactTargetAngle = ((exactTargetAngle % 360) + 360) % 360;
+    const currentVisualRotation = ((currentTotalRotation % 360) + 360) % 360;
+    const degreesToMove =
+      (exactTargetAngle - currentVisualRotation + 360) % 360;
+    const finalRotation =
+      currentTotalRotation + totalFullSpins * 360 + degreesToMove;
     return finalRotation;
   };
 
-
   const handleSpin = () => {
-    if (isSpinning) return; 
+    if (isSpinning) return;
 
     setIsSpinning(true);
     setWinner(undefined); // Clear previous winner
@@ -58,15 +72,6 @@ export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
       {/* Pure CSS Styles */}
       <style>
         {`
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: rem; /* Equivalent to p-4 */
-        }
-        
         .winner-display {
             height: 2rem;
             margin-top: 1.5rem;
@@ -79,21 +84,58 @@ export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
         `}
       </style>
 
-      <div className="container">
-        <Card>
-          <Title>
-            {contestKey}
-          </Title>
+      <Container>
+        <span
+          onClick={() => navigate("/")}
+          style={{
+            position: "absolute",
+            top: "2rem",
+            right: "2rem",
+            textDecoration: "underline",
+          }}
+        >
+          GO BACK
+        </span>
+        <span
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-around",
+            height: "90vh",
+          }}
+        >
+          <Title>{contestKey.toUpperCase()}</Title>
 
-          <Wheel competitors={segments} rotation={rotation} spinDurationSeconds={spinDurationSeconds} isSpinning={isSpinning} segmentAngle={segmentAngle} /> 
-          <Button onClick={handleSpin} disabled={isSpinning} loading={isSpinning} />
-          
-            <div className="winner-display" style={{ margin: 0}}>
-              {winner ? `Winner: ${winner}` : ''}
-            </div>
-          
-        </Card>
-      </div>
+          <Wheel
+            competitors={segments}
+            rotation={rotation}
+            spinDurationSeconds={spinDurationSeconds}
+            isSpinning={isSpinning}
+            segmentAngle={segmentAngle}
+          />
+          <Button
+            onClick={handleSpin}
+            disabled={isSpinning}
+            loading={isSpinning}
+          >
+            SPIN!
+          </Button>
+
+          <div className="winner-display" style={{ margin: 0 }}>
+            {winner ? `Winner: ${winner}` : ""}
+          </div>
+        </span>
+        <div style={{ float: "right" }}>
+          <Button
+            onClick={() => navigate(`/edit/${encodeURIComponent(contestKey)}`)}
+            disabled={isSpinning}
+            loading={isSpinning}
+          >
+            ✎
+          </Button>
+        </div>
+      </Container>
     </>
   );
-}
+};

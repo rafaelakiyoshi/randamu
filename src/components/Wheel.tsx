@@ -32,33 +32,18 @@ function stringToHslColor(str: string) {
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-export const Wheel: React.FC<WheelProps> = ({ competitors, rotation, isSpinning, spinDurationSeconds, segmentAngle }) => {
+export const Wheel: React.FC<WheelProps> = ({
+  competitors,
+  rotation,
+  isSpinning,
+  spinDurationSeconds,
+  segmentAngle,
+}) => {
+  console.log("🚀🚀🚀🚀🚀 => rotation:", rotation);
   return (
     <>
-    
-     <style>
+      <style>
         {`
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem; /* Equivalent to p-4 */
-        }
-
-        .card {
-            max-width: 32rem; /* Equivalent to max-w-md */
-            width: 100%;
-            background-color: #2d3748; /* Equivalent to bg-gray-800 */
-            border-radius: 0.75rem; /* Equivalent to rounded-xl */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Equivalent to shadow-2xl */
-            padding: 1.5rem; /* Equivalent to p-6 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            row-gap: 2rem; /* Equivalent to space-y-8 */
-        }
 
 
         .wheel-container {
@@ -146,59 +131,63 @@ export const Wheel: React.FC<WheelProps> = ({ competitors, rotation, isSpinning,
         }
         `}
       </style>
-    <div className="wheel-container">
-    <div className="pointer" />
+      <div className="wheel-container">
+        <div className="pointer" />
 
-    <svg
-      viewBox="0 0 200 200" // SVG viewbox for 200x200 canvas
-      className="wheel-svg"
-      style={{
-        transform: `rotate(${rotation}deg)`,
-        transition: isSpinning ? `transform ${spinDurationSeconds}s cubic-bezier(0.25, 0.1, 0.25, 1)` : 'none',
-      }}
-    >
-      {competitors.map((competitor, index) => {
-        const startAngle = index * segmentAngle;
-        const endAngle = (index + 1) * segmentAngle;
-        const largeArcFlag = segmentAngle > 180 ? 1 : 0;
+        <svg
+          viewBox="0 0 200 200" // SVG viewbox for 200x200 canvas
+          className="wheel-svg"
+          style={{
+            transform: `rotate(${rotation}deg)`,
+            transition: isSpinning
+              ? `transform ${spinDurationSeconds}s cubic-bezier(0.25, 0.1, 0.25, 1)`
+              : "none",
+          }}
+        >
+          {competitors.map((competitor, index) => {
+            const startAngle = index * segmentAngle;
+            const endAngle = (index + 1) * segmentAngle;
+            const largeArcFlag = segmentAngle > 180 ? 1 : 0;
 
-        // Calculate SVG path coordinates for each segment
-        const x1 = 100 + 100 * Math.cos((Math.PI / 180) * startAngle);
-        const y1 = 100 + 100 * Math.sin((Math.PI / 180) * startAngle);
-        const x2 = 100 + 100 * Math.cos((Math.PI / 180) * endAngle);
-        const y2 = 100 + 100 * Math.sin((Math.PI / 180) * endAngle);
+            // Calculate SVG path coordinates for each segment
+            const x1 = 100 + 100 * Math.cos((Math.PI / 180) * startAngle);
+            const y1 = 100 + 100 * Math.sin((Math.PI / 180) * startAngle);
+            const x2 = 100 + 100 * Math.cos((Math.PI / 180) * endAngle);
+            const y2 = 100 + 100 * Math.sin((Math.PI / 180) * endAngle);
 
-        // Calculate text position in the middle of the segment
-        const textAngle = startAngle + segmentAngle / 2;
-        const textRadius = 70; // Distance of text from center
-        const textX = 100 + textRadius * Math.cos((Math.PI / 180) * textAngle);
-        const textY = 100 + textRadius * Math.sin((Math.PI / 180) * textAngle);
+            // Calculate text position in the middle of the segment
+            const textAngle = startAngle + segmentAngle / 2;
+            const textRadius = 70; // Distance of text from center
+            const textX =
+              100 + textRadius * Math.cos((Math.PI / 180) * textAngle);
+            const textY =
+              100 + textRadius * Math.sin((Math.PI / 180) * textAngle);
 
-        return (
-          <g key={index}>
-            <path
-              d={`M 100,100 L ${x1},${y1} A 100,100 0 ${largeArcFlag},1 ${x2},${y2} Z`}
-              fill={stringToHslColor(competitor)}
-              stroke="#374151" // Darker border for segments
-              strokeWidth="0.5"
-            />
-            <text
-              x={textX}
-              y={textY}
-              fill="white"
-              fontSize="7"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              transform={`rotate(${textAngle}, ${textX}, ${textY})`}
-              style={{ fontWeight: 'bold', userSelect: 'none' }}
-            >
-              {competitor}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  </div>
+            return (
+              <g key={index}>
+                <path
+                  d={`M 100,100 L ${x1},${y1} A 100,100 0 ${largeArcFlag},1 ${x2},${y2} Z`}
+                  fill={stringToHslColor(competitor)}
+                  stroke="#374151" // Darker border for segments
+                  strokeWidth="0.5"
+                />
+                <text
+                  x={textX}
+                  y={textY}
+                  fill="white"
+                  fontSize="7"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  transform={`rotate(${textAngle}, ${textX}, ${textY})`}
+                  style={{ fontWeight: "bold", userSelect: "none" }}
+                >
+                  {competitor}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
     </>
-  )
-}
+  );
+};

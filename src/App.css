@@ -3,11 +3,10 @@
   /* max-width: 1280px; */
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
   font-family: 'Inter', sans-serif;
   padding: 0;
   box-sizing: border-box;
-  background-color: #1a202c; /* Equivalent to bg-gray-900 */
+  background-color: #1a202c;
   color: #f7fafc; /* Equivalent to text-gray-50 */
 }
 
@@ -16,6 +15,18 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #1a202c; /* Equivalent to bg-gray-900 */
+  background-color: #1a202c;
   color: #f7fafc; /* Equivalent to text-gray-50 */
+  height: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
