@@ -155,7 +155,7 @@ const EditContestPage: React.FC = () => {
             display: "flex",
             width: "100%",
             justifyContent: "space-evenly",
-            marginTop: "1.5rem",
+            marginTop: ".5rem",
           }}
         >
           <Button

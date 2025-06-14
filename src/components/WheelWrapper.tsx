@@ -102,7 +102,7 @@ export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "space-around",
-            height: "90vh",
+            height: "89vh",
           }}
         >
           <Title>{contestKey.toUpperCase()}</Title>
