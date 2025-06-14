@@ -39,7 +39,6 @@ export const Wheel: React.FC<WheelProps> = ({
   spinDurationSeconds,
   segmentAngle,
 }) => {
-  console.log("🚀🚀🚀🚀🚀 => rotation:", rotation);
   return (
     <>
       <style>

@@ -104,6 +104,14 @@ const CreateContestPage: React.FC = () => {
                   onClick={() => handleRemoveContestor(index)}
                   disabled={false}
                   loading={false}
+                  style={{
+                    padding: "0 1rem",
+                    borderRadius: "5px",
+                    fontSize: "1.5rem",
+                    marginLeft: "1rem",
+                    backgroundImage:
+                      "linear-gradient(to right,rgb(209, 46, 9),rgb(230, 136, 48))",
+                  }}
                 >
                   X
                 </Button>

@@ -6,8 +6,10 @@ import { contestsAtom } from "./HomePage";
 import { useNavigate, useParams } from "react-router";
 import React from "react";
 import { selectAtom } from "jotai/utils";
+import Modal from "../components/Modal/Modal";
 
 const EditContestPage: React.FC = () => {
+  const [modal, setModal] = React.useState(false);
   const { contestId } = useParams<string>();
   const wheelAtom = React.useMemo(
     () =>
@@ -30,6 +32,15 @@ const EditContestPage: React.FC = () => {
       return { ...current, [contest.title]: contest.contestors };
     });
     navigate(`/contest/${encodeURIComponent(contest.title)}`);
+  };
+
+  const handleDelete = () => {
+    updateContest((current) => {
+      const newContests: Record<string, []> = { ...current };
+      delete newContests[contest.title];
+      return { ...newContests };
+    });
+    navigate(`/`);
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +125,14 @@ const EditContestPage: React.FC = () => {
                   onClick={() => handleRemoveContestor(index)}
                   disabled={false}
                   loading={false}
+                  style={{
+                    padding: "0 1rem",
+                    borderRadius: "5px",
+                    fontSize: "1.5rem",
+                    marginLeft: "1rem",
+                    backgroundImage:
+                      "linear-gradient(to right,rgb(209, 46, 9),rgb(230, 136, 48))",
+                  }}
                 >
                   X
                 </Button>
@@ -131,20 +150,86 @@ const EditContestPage: React.FC = () => {
           </Button>
         </div>
 
-        <Button
-          onClick={handleCreate}
-          disabled={false}
-          loading={false}
+        <div
           style={{
-            position: "absolute",
-            right: "2rem",
-            left: "2rem",
-            bottom: "3rem",
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-evenly",
+            marginTop: "1.5rem",
           }}
         >
-          SAVE
-        </Button>
+          <Button
+            onClick={() => setModal(true)}
+            disabled={false}
+            loading={false}
+            style={{
+              width: "40%",
+              backgroundImage:
+                "linear-gradient(to right,rgb(209, 46, 9),rgb(230, 136, 48))",
+            }}
+          >
+            DELETE
+          </Button>
+          <Button
+            onClick={handleCreate}
+            disabled={false}
+            loading={false}
+            style={{
+              width: "40%",
+              backgroundImage:
+                "linear-gradient(to right,rgb(9, 153, 43),rgb(166, 230, 48))",
+            }}
+          >
+            SAVE
+          </Button>
+        </div>
       </div>
+      {modal && (
+        <Modal>
+          <Title
+            style={{
+              fontSize: "2rem",
+              backgroundImage:
+                "linear-gradient(to right,rgb(28, 22, 21),rgb(94, 90, 87))",
+            }}
+          >
+            Are you sure?
+          </Title>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              marginTop: "3.5rem",
+            }}
+          >
+            <Button
+              onClick={() => setModal(false)}
+              disabled={false}
+              loading={false}
+              style={{
+                width: "45%",
+                backgroundImage:
+                  "linear-gradient(to right,rgb(209, 46, 9),rgb(230, 136, 48))",
+              }}
+            >
+              NO
+            </Button>
+            <Button
+              onClick={handleDelete}
+              disabled={false}
+              loading={false}
+              style={{
+                width: "45%",
+                backgroundImage:
+                  "linear-gradient(to right,rgb(9, 153, 43),rgb(166, 230, 48))",
+              }}
+            >
+              YES
+            </Button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };

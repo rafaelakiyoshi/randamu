@@ -28,7 +28,7 @@ export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
   const [rotation, setRotation] = useState(-segmentAngle / 2 || 0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [winner, setWinner] = useState<string>();
-  const spinDurationSeconds = 3; // Spin duration
+  const spinDurationSeconds = 6; // Spin duration
 
   if (segments.length === 0) return null;
 
@@ -36,7 +36,7 @@ export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
     segmentIndex: number,
     currentTotalRotation: number
   ): number => {
-    const minFullSpins = 5;
+    const minFullSpins = 20;
     const additionalSpins = Math.floor(Math.random() * 8); // 0 to 7 additional spins
     const totalFullSpins = minFullSpins + additionalSpins;
     let exactTargetAngle = -(segmentIndex * segmentAngle + segmentAngle / 2);
@@ -131,6 +131,7 @@ export const WheelWrapper: React.FC<WheelWrapperProps> = ({ contestKey }) => {
             onClick={() => navigate(`/edit/${encodeURIComponent(contestKey)}`)}
             disabled={isSpinning}
             loading={isSpinning}
+            style={{ fontSize: "2rem", padding: "0.2rem 2rem" }}
           >
             ✎
           </Button>
